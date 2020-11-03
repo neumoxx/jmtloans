@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style type="text/css">
+    .tab-content{
+        padding: 20px;
+        margin-bottom: 50px;
+        border-left:1px solid #ddd;
+        border-right:1px solid #ddd;
+        border-bottom:1px solid #ddd;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>JMT</h2>
+    <p>Cálculos hipotecas</p>  
+  
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#tab1">Data</a></li>
+        <li><a data-toggle="tab" href="#tab2">Certif</a></li>
+    </ul>
+  
+    <div class="tab-content">
+        <div id="tab1" class="tab-pane fade in active">
+            <form class="form-horizontal" action="#">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="email">Prestamo:</label>
+                            <input type="text" class="form-control" id="prestamo" placeholder="Introduce importe">
+                        </div>
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Periodo:</label>
+                            <input type="text" class="form-control" id="periodo" placeholder="Introduce el periodo en meses">
+                        </div>
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Interes Diferencial:</label>
+                            <input type="text" class="form-control" id="interesDiferencial" placeholder="Introduce el interes diferencial">
+                        </div>
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Fin mes:</label>
+                            <select class="form-control" id="finMes">
+                                <option></option>
+                                <option value="si">Si</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Revisión Interes:</label>
+                            <input type="text" class="form-control" id="revisionInteres" placeholder="Introduce la revision Interes en meses">
+                        </div>
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Días carencia:</label>
+                            <input type="text" class="form-control" id="diasCarencia" placeholder="Introduce los días de carencia">
+                        </div>
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Tipo interés primera cuota:</label>
+                            <input type="text" class="form-control" id="tipoInteresPrimeraCuota" placeholder="Introduce el tipo de interés de la primera cuota">
+                        </div>
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Cuota creciente:</label>
+                            <select class="form-control" id="cuotaCreciente">
+                                <option></option>
+                                <option value="si">Si</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Fecha primera cuota:</label>
+                            <input type="text" class="form-control" id="fechaPrimeraCuota" placeholder="Introduce la fecha de la primera cuota">
+                        </div>
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Primera cuota de principal:</label>
+                            <input type="text" class="form-control" id="primeraCuotaPrincipal" placeholder="Introduce la primera cuota de principal">
+                        </div>
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Coeficiente cuota creciente:</label>
+                            <input type="text" class="form-control" id="coeficienteCuotaCreciente" placeholder="Introduce el coeficiente cuota creciente">
+                        </div>
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Cuota correspondiente a días de carencia:</label>
+                            <input type="text" class="form-control" id="cuotaCorrespondienteADiasDeCarencia" value="0" placeholder="Introduce la cuota correspondiente a días de carencia">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group col-xs-11">
+                            <button type="button" onClick="calcular()" class="btn btn-primary">Calcular</button>
+                            <button type="button" onClick="borrarLineas()" class="btn btn-default">Borrar líneas</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <table class="table table-striped" id="tablaDatos">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Fecha de pago</th>
+                    <th>Cuota Total</th>
+                    <th>Cuotas Pendientes</th>
+                    <th>Principal por amortizar</th>
+                    <th>Cuota de Principal</th>
+                    <th>Intereses</th>
+                    <th>Cuota Total</th>
+                    <th>Revision Tipo Interes</th>
+                    <th>Importe Pagado</th>
+                    <th>Tipo de interes vinculado</th>
+                    <th>Interes Diferencial</th>
+                    <th>Tipo de Interes</th>
+                    <th>inst status</th>
+                    <th>Nº cuota</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td colspan="15" style="text-align: center;">Introduce los datos en el formulario</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="tab2" class="tab-pane fade">
+            <form class="form-horizontal" action="#">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="email">Loan:</label>
+                            <input type="text" class="form-control" id="loanCert" placeholder="">
+                        </div>
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Fecha cálculo:</label>
+                            <input type="text" class="form-control" id="fechaCalculoCert" placeholder="Introduce el periodo en meses">
+                        </div>
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Principal total:</label>
+                            <input type="text" class="form-control" id="principalTotalCert" placeholder="Introduce el interes diferencial">
+                        </div>
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Fin mes:</label>
+                            <select class="form-control" id="finMes">
+                                <option></option>
+                                <option value="si">Si</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Revisión Interes:</label>
+                            <input type="text" class="form-control" id="revisionInteres" placeholder="Introduce la revision Interes en meses">
+                        </div>
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Días carencia:</label>
+                            <input type="text" class="form-control" id="diasCarencia" placeholder="Introduce los días de carencia">
+                        </div>
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Tipo interés primera cuota:</label>
+                            <input type="text" class="form-control" id="tipoInteresPrimeraCuota" placeholder="Introduce el tipo de interés de la primera cuota">
+                        </div>
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Cuota creciente:</label>
+                            <select class="form-control" id="cuotaCreciente">
+                                <option></option>
+                                <option value="si">Si</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Fecha primera cuota:</label>
+                            <input type="text" class="form-control" id="fechaPrimeraCuota" placeholder="Introduce la fecha de la primera cuota">
+                        </div>
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Primera cuota de principal:</label>
+                            <input type="text" class="form-control" id="primeraCuotaPrincipal" placeholder="Introduce la primera cuota de principal">
+                        </div>
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Coeficiente cuota creciente:</label>
+                            <input type="text" class="form-control" id="coeficienteCuotaCreciente" placeholder="Introduce el coeficiente cuota creciente">
+                        </div>
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Cuota correspondiente a días de carencia:</label>
+                            <input type="text" class="form-control" id="cuotaCorrespondienteADiasDeCarencia" value="0" placeholder="Introduce la cuota correspondiente a días de carencia">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group col-xs-11">
+                            <button type="button" onClick="calcular()" class="btn btn-primary">Calcular</button>
+                            <button type="button" onClick="borrarLineas()" class="btn btn-default">Borrar líneas</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <table class="table table-striped" id="tablaDatos">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Fecha de pago</th>
+                    <th>Cuota Total</th>
+                    <th>Cuotas Pendientes</th>
+                    <th>Principal por amortizar</th>
+                    <th>Cuota de Principal</th>
+                    <th>Intereses</th>
+                    <th>Cuota Total</th>
+                    <th>Revision Tipo Interes</th>
+                    <th>Importe Pagado</th>
+                    <th>Tipo de interes vinculado</th>
+                    <th>Interes Diferencial</th>
+                    <th>Tipo de Interes</th>
+                    <th>inst status</th>
+                    <th>Nº cuota</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td colspan="15" style="text-align: center;">Introduce los datos en el formulario</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var pagosCalculados = 2000;
+    function borrarLineas(){
+        $('#tablaDatos tbody').empty().append('<tr><td colspan="15" style="text-align: center;">Introduce los datos en el formulario</td></tr>');
+    }
+    function calcular(){
+        var prestamo = new Number($('#prestamo').val());
+        var periodo = new Number($('#periodo').val());
+        var interesDiferencial = new Number($('#interesDiferencial').val());
+        var revisionInteres = new Number($('#revisionInteres').val());
+        var diasCarencia = new Number($('#diasCarencia').val());
+        var tipoInteresPrimeraCuota = new Number($('#tipoInteresPrimeraCuota').val());
+        var finMes = $('#finMes').val();
+        var cuotaCreciente = $('#cuotaCreciente').val();
+        var primeraCuotaPrincipal = new Number($('#primeraCuotaPrincipal').val());
+        var coeficienteCuotaCreciente = new Number($('#coeficienteCuotaCreciente').val());
+        var fechaPrimeraCuota = $('#fechaPrimeraCuota').val();
+        var cuotaCorrespondienteADiasDeCarencia = new Number($('#cuotaCorrespondienteADiasDeCarencia').val());
+
+        var fechaPrimeraCuotaArr = fechaPrimeraCuota.split("/");
+
+        $('#tablaDatos tbody').empty();
+        var tipoInteres = tipoInteresPrimeraCuota;
+        var principalPorAmortizar = prestamo;
+        console.log("tipoInteres: "+tipoInteres);
+        console.log("principalPorAmortizar: "+principalPorAmortizar);
+        console.log("cuotaCreciente: "+cuotaCreciente);
+        console.log("primeraCuotaPrincipal: "+primeraCuotaPrincipal);
+        console.log("cuotaCreciente == 'no': "+(cuotaCreciente == 'no'));
+        console.log("tipoInteres/12: "+(tipoInteres/12));
+        console.log("-principalPorAmortizar: "+(-principalPorAmortizar));
+        var cuotaDePrincipal = cuotaCreciente == 'no'?ExcelFormulas.PPMT(tipoInteres/1200,1,periodo,-principalPorAmortizar, 0, 0):primeraCuotaPrincipal;
+        var revisionTipoInteres = 1;
+        var fechaPago = new Date(parseInt(fechaPrimeraCuotaArr[2]), parseInt(fechaPrimeraCuotaArr[1]) - 1, parseInt(fechaPrimeraCuotaArr[0]));
+        var euribor = getEuribor(new Date(fechaPago.getFullYear(), fechaPago.getMonth() - 4, 1), 0);
+        var tipoDeInteresVinculado = euribor;
+        var intereses = (principalPorAmortizar*(tipoInteres/100)/12)+cuotaCorrespondienteADiasDeCarencia;
+        var cuotaTotal = cuotaDePrincipal+intereses;
+        console.log("pagosCalculados: "+pagosCalculados);
+        console.log("cuotaTotal: "+cuotaTotal);
+        console.log("Math.min(pagosCalculados, cuotaTotal): "+Math.min(pagosCalculados, cuotaTotal));
+        var importePagado = Math.max(Math.min(pagosCalculados, cuotaTotal), 0);
+        var cuotasAcumuladas = 0;
+        for(var i = 0;i < parseInt(periodo);i++){
+            $('#tablaDatos tbody').append(  '<tr>\
+                                                <td>'+(i+1)+'</td>\
+                                                <td>'+formatDate(fechaPago)+'</td>\
+                                                <td>'+cuotaTotal.toFixed(2)+'€</td>\
+                                                <td>'+periodo+'</td>\
+                                                <td>'+principalPorAmortizar.toFixed(2)+'€</td>\
+                                                <td>'+cuotaDePrincipal.toFixed(2)+'€</td>\
+                                                <td>'+intereses.toFixed(2)+'€</td>\
+                                                <td>'+cuotaTotal.toFixed(2)+'€</td>\
+                                                <td>'+revisionTipoInteres+'</td>\
+                                                <td>'+importePagado.toFixed(2)+'€</td>\
+                                                <td>'+tipoDeInteresVinculado+'%</td>\
+                                                <td>'+interesDiferencial+'%</td>\
+                                                <td>'+tipoInteres+'%</td>\
+                                                <td></td>\
+                                                <td>'+(i+1)+'</td>\
+                                            </tr>');
+            principalPorAmortizar = principalPorAmortizar - cuotaDePrincipal;
+            revisionTipoInteres = (i+1)%12==0?1:0;
+            fechaPago = finMes == 'no'?new Date(fechaPago.getFullYear(), fechaPago.getMonth() + 1, fechaPago.getDate()):new Date(fechaPago.getFullYear(), fechaPago.getMonth() + 2, 0);
+            tipoDeInteresVinculado = getEuribor(new Date(fechaPago.getFullYear(), fechaPago.getMonth() - 4, 1), tipoDeInteresVinculado);
+            tipoInteres = revisionTipoInteres == 1?tipoDeInteresVinculado+interesDiferencial:tipoInteres;
+            periodo = periodo - 1;
+            cuotaDePrincipal = cuotaCreciente=='no'?ExcelFormulas.PPMT(tipoInteres/1200,1,periodo,-principalPorAmortizar, 0, 0):cuotaDePrincipal*coeficienteCuotaCreciente;
+            intereses = principalPorAmortizar*(tipoInteres/100)/12;
+            cuotasAcumuladas += cuotaTotal;
+            cuotaTotal = cuotaDePrincipal+intereses;
+            importePagado = Math.max(Math.min(pagosCalculados-cuotasAcumuladas, cuotaTotal), 0);
+        }
+    }
+
+    function formatDate(d){
+        return d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
+    }
+
+    function getEuribor(d, tipoDeInteresVinculado){
+        for(var i=0;i<eur_boe.length;i++){
+            var row = eur_boe[i];
+            var arr = row.mes.split("-");
+            if(parseInt(arr[0]) == (d.getMonth()+1) && parseInt(arr[1]) == d.getFullYear()) return new Number(row.euribor);
+        }
+        return tipoDeInteresVinculado;
+    }
+
+    var eur_boe = [ {"mes": "01-2000", "fecha": "", "euribor": "3.949"},
+                    {"mes": "02-2000", "fecha": "", "euribor": "4.111"},
+                    {"mes": "03-2000", "fecha": "", "euribor": "4.267"},
+                    {"mes": "04-2000", "fecha": "", "euribor": "4.365"},
+                    {"mes": "05-2000", "fecha": "", "euribor": "4.849"},
+                    {"mes": "06-2000", "fecha": "", "euribor": "4.968"},
+                    {"mes": "07-2000", "fecha": "", "euribor": "5.105"},
+                    {"mes": "08-2000", "fecha": "", "euribor": "5.248"},
+                    {"mes": "09-2000", "fecha": "", "euribor": "5.219"},
+                    {"mes": "10-2000", "fecha": "", "euribor": "5.218"},
+                    {"mes": "11-2000", "fecha": "", "euribor": "5.193"},
+                    {"mes": "12-2000", "fecha": "", "euribor": "4.881"},
+                    {"mes": "01-2001", "fecha": "", "euribor": "4.574"},
+                    {"mes": "02-2001", "fecha": "", "euribor": "4.591"},
+                    {"mes": "03-2001", "fecha": "", "euribor": "4.471"},
+                    {"mes": "04-2001", "fecha": "", "euribor": "4.481"},
+                    {"mes": "05-2001", "fecha": "", "euribor": "4.461"},
+                    {"mes": "06-2001", "fecha": "", "euribor": "4.312"},
+                    {"mes": "07-2001", "fecha": "", "euribor": "4.311"},
+                    {"mes": "08-2001", "fecha": "", "euribor": "4.108"},
+                    {"mes": "09-2001", "fecha": "", "euribor": "3.770"},
+                    {"mes": "10-2001", "fecha": "", "euribor": "3.369"},
+                    {"mes": "11-2001", "fecha": "", "euribor": "3.198"},
+                    {"mes": "12-2001", "fecha": "", "euribor": "3.298"},
+                    {"mes": "01-2002", "fecha": "", "euribor": "3.483"},
+                    {"mes": "02-2002", "fecha": "", "euribor": "3.594"},
+                    {"mes": "03-2002", "fecha": "", "euribor": "3.816"},
+                    {"mes": "04-2002", "fecha": "", "euribor": "3.860"},
+                    {"mes": "05-2002", "fecha": "", "euribor": "3.963"},
+                    {"mes": "06-2002", "fecha": "", "euribor": "3.869"},
+                    {"mes": "07-2002", "fecha": "", "euribor": "3.645"},
+                    {"mes": "08-2002", "fecha": "", "euribor": "3.440"},
+                    {"mes": "09-2002", "fecha": "", "euribor": "3.236"},
+                    {"mes": "10-2002", "fecha": "", "euribor": "3.126"},
+                    {"mes": "11-2002", "fecha": "", "euribor": "3.017"},
+                    {"mes": "12-2002", "fecha": "", "euribor": "2.872"},
+                    {"mes": "01-2003", "fecha": "", "euribor": "2.705"},
+                    {"mes": "02-2003", "fecha": "", "euribor": "2.504"},
+                    {"mes": "03-2003", "fecha": "", "euribor": "2.411"},
+                    {"mes": "04-2003", "fecha": "", "euribor": "2.447"},
+                    {"mes": "05-2003", "fecha": "", "euribor": "2.252"},
+                    {"mes": "06-2003", "fecha": "", "euribor": "2.014"},
+                    {"mes": "07-2003", "fecha": "", "euribor": "2.076"},
+                    {"mes": "08-2003", "fecha": "", "euribor": "2.279"},
+                    {"mes": "09-2003", "fecha": "", "euribor": "2.258"},
+                    {"mes": "10-2003", "fecha": "", "euribor": "2.303"},
+                    {"mes": "11-2003", "fecha": "", "euribor": "2.410"},
+                    {"mes": "12-2003", "fecha": "", "euribor": "2.388"},
+                    {"mes": "01-2004", "fecha": "", "euribor": "2.216"},
+                    {"mes": "02-2004", "fecha": "", "euribor": "2.163"},
+                    {"mes": "03-2004", "fecha": "", "euribor": "2.055"},
+                    {"mes": "04-2004", "fecha": "", "euribor": "2.163"},
+                    {"mes": "05-2004", "fecha": "", "euribor": "2.297"},
+                    {"mes": "06-2004", "fecha": "", "euribor": "2.404"},
+                    {"mes": "07-2004", "fecha": "", "euribor": "2.361"},
+                    {"mes": "08-2004", "fecha": "", "euribor": "2.302"},
+                    {"mes": "09-2004", "fecha": "", "euribor": "2.377"},
+                    {"mes": "10-2004", "fecha": "", "euribor": "2.316"},
+                    {"mes": "11-2004", "fecha": "", "euribor": "2.328"},
+                    {"mes": "12-2004", "fecha": "", "euribor": "2.301"},
+                    {"mes": "01-2005", "fecha": "", "euribor": "2.312"},
+                    {"mes": "02-2005", "fecha": "", "euribor": "2.310"},
+                    {"mes": "03-2005", "fecha": "", "euribor": "2.335"},
+                    {"mes": "04-2005", "fecha": "", "euribor": "2.265"},
+                    {"mes": "05-2005", "fecha": "", "euribor": "2.193"},
+                    {"mes": "06-2005", "fecha": "", "euribor": "2.103"},
+                    {"mes": "07-2005", "fecha": "", "euribor": "2.168"},
+                    {"mes": "08-2005", "fecha": "", "euribor": "2.223"},
+                    {"mes": "09-2005", "fecha": "", "euribor": "2.220"},
+                    {"mes": "10-2005", "fecha": "", "euribor": "2.414"},
+                    {"mes": "11-2005", "fecha": "", "euribor": "2.684"},
+                    {"mes": "12-2005", "fecha": "", "euribor": "2.783"},
+                    {"mes": "01-2006", "fecha": "23/02/2006", "euribor": "2.833"},
+                    {"mes": "02-2006", "fecha": "23/03/2006", "euribor": "2.914"},
+                    {"mes": "03-2006", "fecha": "22/04/2006", "euribor": "3.105"},
+                    {"mes": "04-2006", "fecha": "24/05/2006", "euribor": "3.221"},
+                    {"mes": "05-2006", "fecha": "24/06/2006", "euribor": "3.308"},
+                    {"mes": "06-2006", "fecha": "24/07/2006", "euribor": "3.401"},
+                    {"mes": "07-2006", "fecha": "24/08/2006", "euribor": "3.539"},
+                    {"mes": "08-2006", "fecha": "23/09/2006", "euribor": "3.615"},
+                    {"mes": "09-2006", "fecha": "23/10/2006", "euribor": "3.715"},
+                    {"mes": "10-2006", "fecha": "24/11/2006", "euribor": "3.799"},
+                    {"mes": "11-2006", "fecha": "23/12/2006", "euribor": "3.864"},
+                    {"mes": "12-2006", "fecha": "22/01/2007", "euribor": "3.921"},
+                    {"mes": "01-2007", "fecha": "22/02/2007", "euribor": "4.064"},
+                    {"mes": "02-2007", "fecha": "23/03/2007", "euribor": "4.094"},
+                    {"mes": "03-2007", "fecha": "23/04/2007", "euribor": "4.106"},
+                    {"mes": "04-2007", "fecha": "23/05/2007", "euribor": "4.253"},
+                    {"mes": "05-2007", "fecha": "23/06/2007", "euribor": "4.373"},
+                    {"mes": "06-2007", "fecha": "23/07/2007", "euribor": "4.505"},
+                    {"mes": "07-2007", "fecha": "23/08/2007", "euribor": "4.564"},
+                    {"mes": "08-2007", "fecha": "22/09/2007", "euribor": "4.666"},
+                    {"mes": "09-2007", "fecha": "22/10/2007", "euribor": "4.725"},
+                    {"mes": "10-2007", "fecha": "22/11/2007", "euribor": "4.647"},
+                    {"mes": "11-2007", "fecha": "22/12/2007", "euribor": "4.607"},
+                    {"mes": "12-2007", "fecha": "22/01/2008", "euribor": "4.793"},
+                    {"mes": "01-2008", "fecha": "23/02/2008", "euribor": "4.498"},
+                    {"mes": "02-2008", "fecha": "24/03/2008", "euribor": "4.349"},
+                    {"mes": "03-2008", "fecha": "19/04/2008", "euribor": "4.590"},
+                    {"mes": "04-2008", "fecha": "23/05/2008", "euribor": "4.820"},
+                    {"mes": "05-2008", "fecha": "21/06/2008", "euribor": "4.994"},
+                    {"mes": "06-2008", "fecha": "22/07/2008", "euribor": "5.361"},
+                    {"mes": "07-2008", "fecha": "23/08/2008", "euribor": "5.393"},
+                    {"mes": "08-2008", "fecha": "19/09/2008", "euribor": "5.323"},
+                    {"mes": "09-2008", "fecha": "25/10/2008", "euribor": "5.384"},
+                    {"mes": "10-2008", "fecha": "21/11/2008", "euribor": "5.248"},
+                    {"mes": "11-2008", "fecha": "18/12/2008", "euribor": "4.350"},
+                    {"mes": "12-2008", "fecha": "03/01/2009", "euribor": "3.452"},
+                    {"mes": "01-2009", "fecha": "02/02/2009", "euribor": "2.622"},
+                    {"mes": "02-2009", "fecha": "03/03/2009", "euribor": "2.135"},
+                    {"mes": "03-2009", "fecha": "02/04/2009", "euribor": "1.909"},
+                    {"mes": "04-2009", "fecha": "06/05/2009", "euribor": "1.771"},
+                    {"mes": "05-2009", "fecha": "02/06/2009", "euribor": "1.644"},
+                    {"mes": "06-2009", "fecha": "02/07/2009", "euribor": "1.610"},
+                    {"mes": "07-2009", "fecha": "04/08/2009", "euribor": "1.412"},
+                    {"mes": "08-2009", "fecha": "02/09/2009", "euribor": "1.334"},
+                    {"mes": "09-2009", "fecha": "02/10/2009", "euribor": "1.261"},
+                    {"mes": "10-2009", "fecha": "03/11/2009", "euribor": "1.243"},
+                    {"mes": "11-2009", "fecha": "02/12/2009", "euribor": "1.231"},
+                    {"mes": "12-2009", "fecha": "05/01/2010", "euribor": "1.242"},
+                    {"mes": "01-2010", "fecha": "02/02/2010", "euribor": "1.232"},
+                    {"mes": "02-2010", "fecha": "02/03/2010", "euribor": "1.225"},
+                    {"mes": "03-2010", "fecha": "06/04/2010", "euribor": "1.215"},
+                    {"mes": "04-2010", "fecha": "04/05/2010", "euribor": "1.225"},
+                    {"mes": "05-2010", "fecha": "02/06/2010", "euribor": "1.249"},
+                    {"mes": "06-2010", "fecha": "02/07/2010", "euribor": "1.281"},
+                    {"mes": "07-2010", "fecha": "04/08/2010", "euribor": "1.373"},
+                    {"mes": "08-2010", "fecha": "02/09/2010", "euribor": "1.421"},
+                    {"mes": "09-2010", "fecha": "02/10/2010", "euribor": "1.420"},
+                    {"mes": "10-2010", "fecha": "03/11/2010", "euribor": "1.495"},
+                    {"mes": "11-2010", "fecha": "02/12/2010", "euribor": "1.541"},
+                    {"mes": "12-2010", "fecha": "04/01/2011", "euribor": "1.526"},
+                    {"mes": "01-2011", "fecha": "02/02/2011", "euribor": "1.550"},
+                    {"mes": "02-2011", "fecha": "02/03/2011", "euribor": "1.714"},
+                    {"mes": "03-2011", "fecha": "02/04/2011", "euribor": "1.924"},
+                    {"mes": "04-2011", "fecha": "04/05/2011", "euribor": "2.086"},
+                    {"mes": "05-2011", "fecha": "02/06/2011", "euribor": "2.147"},
+                    {"mes": "06-2011", "fecha": "02/07/2011", "euribor": "2.144"},
+                    {"mes": "07-2011", "fecha": "02/08/2011", "euribor": "2.183"},
+                    {"mes": "08-2011", "fecha": "02/09/2011", "euribor": "2.097"},
+                    {"mes": "09-2011", "fecha": "04/10/2011", "euribor": "2.067"},
+                    {"mes": "10-2011", "fecha": "03/11/2011", "euribor": "2.110"},
+                    {"mes": "11-2011", "fecha": "02/12/2011", "euribor": "2.044"},
+                    {"mes": "12-2011", "fecha": "03/01/2012", "euribor": "2.004"},
+                    {"mes": "01-2012", "fecha": "02/02/2012", "euribor": "1.837"},
+                    {"mes": "02-2012", "fecha": "02/03/2012", "euribor": "1.678"},
+                    {"mes": "03-2012", "fecha": "03/04/2012", "euribor": "1.499"},
+                    {"mes": "04-2012", "fecha": "04/05/2012", "euribor": "1.368"},
+                    {"mes": "05-2012", "fecha": "02/06/2012", "euribor": "1.266"},
+                    {"mes": "06-2012", "fecha": "03/07/2012", "euribor": "1.219"},
+                    {"mes": "07-2012", "fecha": "02/08/2012", "euribor": "1.061"},
+                    {"mes": "08-2012", "fecha": "04/09/2012", "euribor": "0.877"},
+                    {"mes": "09-2012", "fecha": "02/10/2012", "euribor": "0.740"},
+                    {"mes": "10-2012", "fecha": "02/11/2012", "euribor": "0.650"},
+                    {"mes": "11-2012", "fecha": "04/12/2012", "euribor": "0.588"},
+                    {"mes": "12-2012", "fecha": "03/01/2013", "euribor": "0.549"},
+                    {"mes": "01-2013", "fecha": "02/02/2013", "euribor": "0.575"},
+                    {"mes": "02-2013", "fecha": "02/03/2013", "euribor": "0.594"},
+                    {"mes": "03-2013", "fecha": "02/04/2013", "euribor": "0.545"},
+                    {"mes": "04-2013", "fecha": "04/05/2013", "euribor": "0.528"},
+                    {"mes": "05-2013", "fecha": "04/06/2013", "euribor": "0.484"},
+                    {"mes": "06-2013", "fecha": "02/07/2013", "euribor": "0.507"},
+                    {"mes": "07-2013", "fecha": "02/08/2013", "euribor": "0.525"},
+                    {"mes": "08-2013", "fecha": "03/09/2013", "euribor": "0.542"},
+                    {"mes": "09-2013", "fecha": "02/10/2013", "euribor": "0.543"},
+                    {"mes": "10-2013", "fecha": "05/11/2013", "euribor": "0.541"},
+                    {"mes": "11-2013", "fecha": "03/12/2013", "euribor": "0.506"},
+                    {"mes": "12-2013", "fecha": "03/01/2014", "euribor": "0.543"},
+                    {"mes": "01-2014", "fecha": "04/02/2014", "euribor": "0.562"},
+                    {"mes": "02-2014", "fecha": "04/03/2014", "euribor": "0.549"},
+                    {"mes": "03-2014", "fecha": "02/04/2014", "euribor": "0.577"},
+                    {"mes": "04-2014", "fecha": "06/05/2014", "euribor": "0.604"},
+                    {"mes": "05-2014", "fecha": "03/06/2014", "euribor": "0.592"},
+                    {"mes": "06-2014", "fecha": "02/07/2014", "euribor": "0.513"},
+                    {"mes": "07-2014", "fecha": "02/08/2014", "euribor": "0.488"},
+                    {"mes": "08-2014", "fecha": "02/09/2014", "euribor": "0.469"},
+                    {"mes": "09-2014", "fecha": "02/10/2014", "euribor": "0.362"},
+                    {"mes": "10-2014", "fecha": "04/11/2014", "euribor": "0.338"},
+                    {"mes": "11-2014", "fecha": "02/12/2014", "euribor": "0.335"},
+                    {"mes": "12-2014", "fecha": "03/01/2015", "euribor": "0.329"},
+                    {"mes": "01-2015", "fecha": "03/02/2015", "euribor": "0.298"},
+                    {"mes": "02-2015", "fecha": "03/03/2015", "euribor": "0.255"},
+                    {"mes": "03-2015", "fecha": "02/04/2015", "euribor": "0.212"},
+                    {"mes": "04-2015", "fecha": "05/05/2015", "euribor": "0.180"},
+                    {"mes": "05-2015", "fecha": "02/06/2015", "euribor": "0.165"},
+                    {"mes": "06-2015", "fecha": "03/07/2015", "euribor": "0.163"},
+                    {"mes": "07-2015", "fecha": "04/08/2015", "euribor": "0.167"},
+                    {"mes": "08-2015", "fecha": "02/09/2015", "euribor": "0.161"},
+                    {"mes": "09-2015", "fecha": "02/10/2015", "euribor": "0.154"},
+                    {"mes": "10-2015", "fecha": "02/11/2015", "euribor": "0.128"},
+                    {"mes": "11-2015", "fecha": "02/12/2015", "euribor": "0.079"},
+                    {"mes": "12-2015", "fecha": "05/01/2016", "euribor": "0.059"},
+                    {"mes": "01-2016", "fecha": "02/02/2016", "euribor": "0.042"},
+                    {"mes": "02-2016", "fecha": "02/03/2016", "euribor": "-0.008"},
+                    {"mes": "03-2016", "fecha": "02/04/2016", "euribor": "-0.012"},
+                    {"mes": "04-2016", "fecha": "04/05/2016", "euribor": "-0.010"},
+                    {"mes": "05-2016", "fecha": "02/06/2016", "euribor": "-0.013"},
+                    {"mes": "06-2016", "fecha": "02/07/2016", "euribor": "-0.028"},
+                    {"mes": "07-2016", "fecha": "03/08/2016", "euribor": "-0.056"},
+                    {"mes": "08-2016", "fecha": "02/09/2016", "euribor": "-0.048"},
+                    {"mes": "09-2016", "fecha": "04/10/2016", "euribor": "-0.057"},
+                    {"mes": "10-2016", "fecha": "03/11/2016", "euribor": "-0.069"},
+                    {"mes": "11-2016", "fecha": "02/12/2016", "euribor": "-0.074"},
+                    {"mes": "12-2016", "fecha": "03/01/2017", "euribor": "-0.080"},
+                    {"mes": "01-2017", "fecha": "02/02/2017", "euribor": "-0.095"},
+                    {"mes": "02-2017", "fecha": "02/03/2017", "euribor": "-0.106"},
+                    {"mes": "03-2017", "fecha": "04/04/2017", "euribor": "-0.110"},
+                    {"mes": "04-2017", "fecha": "04/05/2017", "euribor": "-0.119"},
+                    {"mes": "05-2017", "fecha": "02/06/2017", "euribor": "-0.127"},
+                    {"mes": "06-2017", "fecha": "04/07/2017", "euribor": "-0.149"},
+                    {"mes": "07-2017", "fecha": "02/08/2017", "euribor": "-0.154"},
+                    {"mes": "08-2017", "fecha": "02/09/2017", "euribor": "-0.156"},
+                    {"mes": "09-2017", "fecha": "03/10/2017", "euribor": "-0.168"},
+                    {"mes": "10-2017", "fecha": "03/11/2017", "euribor": "-0.180"},
+                    {"mes": "11-2017", "fecha": "02/12/2017", "euribor": "-0.189"},
+                    {"mes": "12-2017", "fecha": "03/01/2018", "euribor": "-0.190"},
+                    {"mes": "01-2018", "fecha": "02/02/2018", "euribor": "-0.189"},
+                    {"mes": "02-2018", "fecha": "02/03/2018", "euribor": "-0.191"},
+                    {"mes": "03-2018", "fecha": "03/04/2018", "euribor": "-0.191"},
+                    {"mes": "04-2018", "fecha": "04/05/2018", "euribor": "-0.190"},
+                    {"mes": "05-2018", "fecha": "02/06/2018", "euribor": "-0.188"},
+                    {"mes": "06-2018", "fecha": "03/07/2018", "euribor": "-0.181"},
+                    {"mes": "07-2018", "fecha": "02/08/2018", "euribor": "-0.180"},
+                    {"mes": "08-2018", "fecha": "04/09/2018", "euribor": "-0.169"},
+                    {"mes": "09-2018", "fecha": "02/10/2018", "euribor": "-0.166"},
+                    {"mes": "10-2018", "fecha": "03/11/2018", "euribor": "-0.154"},
+                    {"mes": "11-2018", "fecha": "04/12/2018", "euribor": "-0.147"},
+                    {"mes": "12-2018", "fecha": "03/01/2019", "euribor": "-0.129"},
+                    {"mes": "01-2019", "fecha": "02/02/2019", "euribor": "-0.116"},
+                    {"mes": "02-2019", "fecha": "02/03/2019", "euribor": "-0.108"},
+                    {"mes": "03-2019", "fecha": "02/04/2019", "euribor": "-0.109"},
+                    {"mes": "04-2019", "fecha": "07/05/2019", "euribor": "-0.112"},
+                    {"mes": "05-2019", "fecha": "04/06/2019", "euribor": "-0.134"},
+                    {"mes": "06-2019", "fecha": "02/07/2019", "euribor": "-0.190"},
+                    {"mes": "07-2019", "fecha": "02/08/2019", "euribor": "-0.283"},
+                    {"mes": "08-2019", "fecha": "03/09/2019", "euribor": "-0.356"},
+                    {"mes": "09-2019", "fecha": "02/10/2019", "euribor": "-0.339"},
+                    {"mes": "10-2019", "fecha": "05/11/2019", "euribor": "-0.304"},
+                    {"mes": "11-2019", "fecha": "03/12/2019", "euribor": "-0.272"},
+                    {"mes": "12-2019", "fecha": "03/01/2020", "euribor": "-0.261"},
+                    {"mes": "01-2020", "fecha": "04/02/2020", "euribor": "-0.253"},
+                    {"mes": "02-2020", "fecha": "03/03/2020", "euribor": "-0.288"},
+                    {"mes": "03-2020", "fecha": "02/04/2020", "euribor": "-0.266"},
+                    {"mes": "04-2020", "fecha": "05/05/2020", "euribor": "-0.108"},
+                    {"mes": "05-2020", "fecha": "02/06/2020", "euribor": "-0.081"},
+                    {"mes": "06-2020", "fecha": "02/07/2020", "euribor": "-0.147"},
+                    {"mes": "07-2020", "fecha": "04/08/2020", "euribor": "-0.279"}];
+
+    /* Based on 
+    * - EGM Mathematical Finance class by Enrique Garcia M. <egarcia@egm.co>
+    * - A Guide to the PMT, FV, IPMT and PPMT Functions by Kevin (aka MWVisa1)
+    */
+
+    var ExcelFormulas = {
+
+    PVIF: function(rate, nper) {
+        return Math.pow(1 + rate, nper);
+    },
+
+    FVIFA: function(rate, nper) {
+        return rate == 0? nper: (this.PVIF(rate, nper) - 1) / rate;
+    },	
+
+    PMT: function(rate, nper, pv, fv, type) {
+        if (!fv) fv = 0;
+        if (!type) type = 0;
+
+        if (rate == 0) return -(pv + fv)/nper;
+        
+        var pvif = Math.pow(1 + rate, nper);
+        var pmt = rate / (pvif - 1) * -(pv * pvif + fv);
+
+        if (type == 1) {
+            pmt /= (1 + rate);
+        };
+
+        return pmt;
+    },
+
+    IPMT: function(pv, pmt, rate, per) {
+        var tmp = Math.pow(1 + rate, per);
+        return 0 - (pv * tmp * rate + pmt * (tmp - 1));
+    },
+
+    PPMT: function(rate, per, nper, pv, fv, type) {
+        if (per < 1 || (per >= nper + 1)) return null;
+        var pmt = this.PMT(rate, nper, pv, fv, type);
+        var ipmt = this.IPMT(pv, pmt, rate, per - 1);
+        return pmt - ipmt;
+    },
+
+    DaysBetween: function(date1, date2) {
+        var oneDay = 24*60*60*1000;
+        return Math.round(Math.abs((date1.getTime() - date2.getTime())/oneDay));
+    },
+
+    // Change Date and Flow to date and value fields you use
+    XNPV: function(rate, values) {
+        var xnpv = 0.0;
+        var firstDate = new Date(values[0].Date);
+        for (var key in values) {
+            var tmp = values[key];
+            var value = tmp.Flow;
+            var date = new Date(tmp.Date);
+            xnpv += value / Math.pow(1 + rate, this.DaysBetween(firstDate, date)/365);
+        };
+        return xnpv;
+    },
+
+    XIRR: function(values, guess) {
+        if (!guess) guess = 0.1;
+        
+        var x1 = 0.0;
+        var x2 = guess;
+        var f1 = this.XNPV(x1, values);
+        var f2 = this.XNPV(x2, values);
+        
+        for (var i = 0; i < 100; i++) {
+            if ((f1 * f2) < 0.0) break;
+            if (Math.abs(f1) < Math.abs(f2)) {
+                f1 = this.XNPV(x1 += 1.6 * (x1 - x2), values);
+            }
+            else {
+                f2 = this.XNPV(x2 += 1.6 * (x2 - x1), values);
+            }
+        };
+        
+        if ((f1 * f2) > 0.0) return null;
+        
+        var f = this.XNPV(x1, values);
+        if (f < 0.0) {
+            var rtb = x1;
+            var dx = x2 - x1;
+        }
+        else {
+            var rtb = x2;
+            var dx = x1 - x2;
+        };
+        
+        for (var i = 0; i < 100; i++) {
+            dx *= 0.5;
+            var x_mid = rtb + dx;
+            var f_mid = this.XNPV(x_mid, values);
+            if (f_mid <= 0.0) rtb = x_mid;
+            if ((Math.abs(f_mid) < 1.0e-6) || (Math.abs(dx) < 1.0e-6)) return x_mid;
+        };
+        
+        return null;
+    }
+
+    };
+</script>
+</body>
+</html>
