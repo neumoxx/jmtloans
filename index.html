@@ -17,83 +17,143 @@
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
     }
+
+    div.form-group.inline{
+        display: flex;
+        align-items: center;
+    }
+
+    table.summary-table td{
+        padding-right: 20px;
+    }
+
+    span.gray{
+        color: #ccc;
+    }
+
+    @media print { 
+        #tablaDatosPrint {
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+
+        .container-fluid > h2,
+        .container-fluid > p,
+        ul.nav-tabs {
+            display: none;
+        }
+
+        div.tab-content{
+            border: none;
+        }
+    }
+
+    @page { size: auto;  margin: 0mm; }
   </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container-fluid">
     <h2>JMT</h2>
     <p>Cálculos hipotecas</p>  
   
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#tab1">Data</a></li>
         <li><a data-toggle="tab" href="#tab2">Certif</a></li>
+        <li><a data-toggle="tab" href="#tab3">Print</a></li>
     </ul>
   
     <div class="tab-content">
         <div id="tab1" class="tab-pane fade in active">
             <form class="form-horizontal" action="#">
                 <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-3">
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="email">Loan:</label>
+                            <input type="text" class="form-control" id="loan" value="Test LOAN" placeholder="Ponle nombre...">
+                        </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="email">Prestamo:</label>
-                            <input type="text" class="form-control" id="prestamo" placeholder="Introduce importe">
+                            <input type="text" class="form-control" id="prestamo" value="46000" placeholder="Introduce importe">
                         </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Periodo:</label>
-                            <input type="text" class="form-control" id="periodo" placeholder="Introduce el periodo en meses">
+                            <input type="text" class="form-control" id="periodo" value="156" placeholder="Introduce el periodo en meses">
                         </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Interes Diferencial:</label>
-                            <input type="text" class="form-control" id="interesDiferencial" placeholder="Introduce el interes diferencial">
+                            <input type="text" class="form-control" id="interesDiferencial" value="3.5" placeholder="Introduce el interes diferencial">
                         </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Fin mes:</label>
                             <select class="form-control" id="finMes">
                                 <option></option>
                                 <option value="si">Si</option>
-                                <option value="no">No</option>
+                                <option selected value="no">No</option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-3">
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Fecha cálculo:</label>
+                            <input type="text" class="form-control" id="fechaCalculo" value="27/08/2020" placeholder="Introduce la fecha de cálculo">
+                        </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Revisión Interes:</label>
-                            <input type="text" class="form-control" id="revisionInteres" placeholder="Introduce la revision Interes en meses">
+                            <input type="text" class="form-control" id="revisionInteres" value="12" placeholder="Introduce la revision Interes en meses">
                         </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Días carencia:</label>
-                            <input type="text" class="form-control" id="diasCarencia" placeholder="Introduce los días de carencia">
+                            <input type="text" class="form-control" id="diasCarencia" value="0" placeholder="Introduce los días de carencia">
                         </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Tipo interés primera cuota:</label>
-                            <input type="text" class="form-control" id="tipoInteresPrimeraCuota" placeholder="Introduce el tipo de interés de la primera cuota">
+                            <input type="text" class="form-control" id="tipoInteresPrimeraCuota" value="5.5" placeholder="Introduce el tipo de interés de la primera cuota">
                         </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Cuota creciente:</label>
                             <select class="form-control" id="cuotaCreciente">
                                 <option></option>
                                 <option value="si">Si</option>
-                                <option value="no">No</option>
+                                <option selected value="no">No</option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-3">
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Fecha primera cuota:</label>
-                            <input type="text" class="form-control" id="fechaPrimeraCuota" placeholder="Introduce la fecha de la primera cuota">
+                            <input type="text" class="form-control" id="fechaPrimeraCuota" value="03/02/2016" placeholder="Introduce la fecha de la primera cuota">
                         </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Primera cuota de principal:</label>
-                            <input type="text" class="form-control" id="primeraCuotaPrincipal" placeholder="Introduce la primera cuota de principal">
+                            <input type="text" class="form-control" id="primeraCuotaPrincipal" value="" placeholder="Introduce la primera cuota de principal">
                         </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Coeficiente cuota creciente:</label>
-                            <input type="text" class="form-control" id="coeficienteCuotaCreciente" placeholder="Introduce el coeficiente cuota creciente">
+                            <input type="text" class="form-control" id="coeficienteCuotaCreciente" value="" placeholder="Introduce el coeficiente cuota creciente">
                         </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Cuota correspondiente a días de carencia:</label>
                             <input type="text" class="form-control" id="cuotaCorrespondienteADiasDeCarencia" value="0" placeholder="Introduce la cuota correspondiente a días de carencia">
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Pagos ya realizados:</label>
+                            <input type="text" class="form-control" id="pagosCalculados" value="3000" placeholder="Introduce los pagos ya realizados">
+                        </div>
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Tipo:</label>
+                            <input type="text" class="form-control" id="tipo" value="1" placeholder="Introduce tipo">
+                        </div>
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Def int:</label>
+                            <input type="text" class="form-control" id="defInt" value="1" placeholder="Introduce def int">
+                        </div>
+                        <div class="form-group col-xs-11">
+                            <label class="control-label" for="pwd">Fecha demora:</label>
+                            <input type="text" class="form-control" id="fechaDemora" value="27/08/2020" placeholder="Introduce la fecha de demora">
                         </div>
                     </div>
                 </div>
@@ -137,69 +197,71 @@
         <div id="tab2" class="tab-pane fade">
             <form class="form-horizontal" action="#">
                 <div class="row">
-                    <div class="col-xs-4">
-                        <div class="form-group col-xs-11">
-                            <label class="control-label" for="email">Loan:</label>
-                            <input type="text" class="form-control" id="loanCert" placeholder="">
-                        </div>
-                        <div class="form-group col-xs-11">
-                            <label class="control-label" for="pwd">Fecha cálculo:</label>
-                            <input type="text" class="form-control" id="fechaCalculoCert" placeholder="Introduce el periodo en meses">
-                        </div>
-                        <div class="form-group col-xs-11">
-                            <label class="control-label" for="pwd">Principal total:</label>
-                            <input type="text" class="form-control" id="principalTotalCert" placeholder="Introduce el interes diferencial">
-                        </div>
-                        <div class="form-group col-xs-11">
-                            <label class="control-label" for="pwd">Fin mes:</label>
-                            <select class="form-control" id="finMes">
-                                <option></option>
-                                <option value="si">Si</option>
-                                <option value="no">No</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xs-4">
-                        <div class="form-group col-xs-11">
-                            <label class="control-label" for="pwd">Revisión Interes:</label>
-                            <input type="text" class="form-control" id="revisionInteres" placeholder="Introduce la revision Interes en meses">
-                        </div>
-                        <div class="form-group col-xs-11">
-                            <label class="control-label" for="pwd">Días carencia:</label>
-                            <input type="text" class="form-control" id="diasCarencia" placeholder="Introduce los días de carencia">
-                        </div>
-                        <div class="form-group col-xs-11">
-                            <label class="control-label" for="pwd">Tipo interés primera cuota:</label>
-                            <input type="text" class="form-control" id="tipoInteresPrimeraCuota" placeholder="Introduce el tipo de interés de la primera cuota">
-                        </div>
-                        <div class="form-group col-xs-11">
-                            <label class="control-label" for="pwd">Cuota creciente:</label>
-                            <select class="form-control" id="cuotaCreciente">
-                                <option></option>
-                                <option value="si">Si</option>
-                                <option value="no">No</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xs-4">
-                        <div class="form-group col-xs-11">
-                            <label class="control-label" for="pwd">Fecha primera cuota:</label>
-                            <input type="text" class="form-control" id="fechaPrimeraCuota" placeholder="Introduce la fecha de la primera cuota">
-                        </div>
-                        <div class="form-group col-xs-11">
-                            <label class="control-label" for="pwd">Primera cuota de principal:</label>
-                            <input type="text" class="form-control" id="primeraCuotaPrincipal" placeholder="Introduce la primera cuota de principal">
-                        </div>
-                        <div class="form-group col-xs-11">
-                            <label class="control-label" for="pwd">Coeficiente cuota creciente:</label>
-                            <input type="text" class="form-control" id="coeficienteCuotaCreciente" placeholder="Introduce el coeficiente cuota creciente">
-                        </div>
-                        <div class="form-group col-xs-11">
-                            <label class="control-label" for="pwd">Cuota correspondiente a días de carencia:</label>
-                            <input type="text" class="form-control" id="cuotaCorrespondienteADiasDeCarencia" value="0" placeholder="Introduce la cuota correspondiente a días de carencia">
-                        </div>
+                    <div class="col-xs-12">
+                        <table class="summary-table">
+                            <tr>
+                                <td><b>Loan: </b></td>
+                                <td><span id="loanCert"></span></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><b>Fecha cálculo: </b></td>
+                                <td><span id="fechaCalculoCert"></span></td>
+                                <td><span id="indexCert" class="gray"></span></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><b>Principal total: </b></td>
+                                <td><span id="principalTotal"></span></td>
+                                <td><span id="fechaIndexCert" class="gray"></span></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><b>Principal vencido: </b></td>
+                                <td><span id="principalVencidoTotal"></span></td>
+                                <td><span id="tipoInteresIndexCert" class="gray"></span></td>
+                                <td><span id="tipoInteresDemoraIndexCert" class="gray"></span></td>
+                            </tr>
+                            <tr>
+                                <td><b>Principal no vencido: </b></td>
+                                <td><span id="principalNoVencidoTotal"></span></td>
+                                <td><span id="principalNoVencidoIndexCert" class="gray"></span></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><b>Intereses ordinarios: </b></td>
+                                <td><span id="interesesOrdinarios"></span></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><b>Intereses no vencidos: </b></td>
+                                <td><span id="interesesNoVencidos"></span></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><b>Intereses de demora: </b></td>
+                                <td><span id="interesesDemora"></span></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="4"><hr/></td>
+                            </tr>
+                            <tr>
+                                <td><b>Total: </b></td>
+                                <td><span id="totalCert"></span></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
+                <br/>
+                <br/>
+                <br/>
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="form-group col-xs-11">
@@ -210,29 +272,62 @@
                 </div>
             </form>
 
-            <table class="table table-striped" id="tablaDatos">
+            <table class="table table-striped" id="tablaDatosCert">
                 <thead>
                 <tr>
-                    <th>id</th>
-                    <th>Fecha de pago</th>
-                    <th>Cuota Total</th>
-                    <th>Cuotas Pendientes</th>
-                    <th>Principal por amortizar</th>
-                    <th>Cuota de Principal</th>
-                    <th>Intereses</th>
-                    <th>Cuota Total</th>
-                    <th>Revision Tipo Interes</th>
-                    <th>Importe Pagado</th>
+                    <th>#</th>
+                    <th>Cuotas restantes</th>
+                    <th>Fecha</th>
+                    <th>Principal en deuda</th>
                     <th>Tipo de interes vinculado</th>
                     <th>Interes Diferencial</th>
+                    <th>Rev</th>
                     <th>Tipo de Interes</th>
-                    <th>inst status</th>
-                    <th>Nº cuota</th>
+                    <th>Cuota Principal</th>
+                    <th>Cuota Interés</th>
+                    <th>Cuota Total</th>
+                    <th>Pagado principal</th>
+                    <th>Pagado intereses</th>
+                    <th>Pagado total</th>
+                    <th>Pendiente</th>
+                    <th>Demora</th>
+                    <th>Otras Amort</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td colspan="15" style="text-align: center;">Introduce los datos en el formulario</td>
+                    <td colspan="17" style="text-align: center;"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="tab3" class="tab-pane fade">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group col-xs-11">
+                        <button type="button" onClick="window.print();" class="btn btn-primary">Imprimir</button>
+                    </div>
+                </div>
+            </div>
+
+            <table class="table table-striped" id="tablaDatosPrint">
+                <thead>
+                    <tr>
+                        <th colspan="7" id="loanPrint"></th>
+                    </tr>
+                    <tr>
+                        <th>Fech Vto</th>
+                        <th>Tipo interés cobro</th>
+                        <th>Tipo interés demora</th>
+                        <th>Capital</th>
+                        <th>Intereses</th>
+                        <th>Intereses Demora</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td colspan="17" style="text-align: center;"></td>
                 </tr>
                 </tbody>
             </table>
@@ -240,9 +335,10 @@
     </div>
 </div>
 <script type="text/javascript">
-    var pagosCalculados = 2000;
     function borrarLineas(){
         $('#tablaDatos tbody').empty().append('<tr><td colspan="15" style="text-align: center;">Introduce los datos en el formulario</td></tr>');
+        $('#tablaDatosCert tbody').empty();
+        $('#tablaDatosPrint tbody').empty();
     }
     function calcular(){
         var prestamo = new Number($('#prestamo').val());
@@ -257,10 +353,24 @@
         var coeficienteCuotaCreciente = new Number($('#coeficienteCuotaCreciente').val());
         var fechaPrimeraCuota = $('#fechaPrimeraCuota').val();
         var cuotaCorrespondienteADiasDeCarencia = new Number($('#cuotaCorrespondienteADiasDeCarencia').val());
+        var loan = $('#loan').val();
+        var fechaCalculo = $('#fechaCalculo').val();
+        var pagosCalculados = new Number($('#pagosCalculados').val());
+        var defInt = new Number($('#defInt').val());
+        var tipo = new Number($('#tipo').val());
+        var fechaDemora = $('#fechaDemora').val();
 
         var fechaPrimeraCuotaArr = fechaPrimeraCuota.split("/");
+        var fechaDemoraArr = fechaDemora.split("/");
+        var fechaCalculoArr = fechaCalculo.split("/");
+
+        $('#loanCert').text(loan);
+        $('#loanPrint').text(loan);
+        $('#fechaCalculoCert').text(fechaCalculo);
 
         $('#tablaDatos tbody').empty();
+        $('#tablaDatosCert tbody').empty();
+        $('#tablaDatosPrint tbody').empty();
         var tipoInteres = tipoInteresPrimeraCuota;
         var principalPorAmortizar = prestamo;
         console.log("tipoInteres: "+tipoInteres);
@@ -273,6 +383,8 @@
         var cuotaDePrincipal = cuotaCreciente == 'no'?ExcelFormulas.PPMT(tipoInteres/1200,1,periodo,-principalPorAmortizar, 0, 0):primeraCuotaPrincipal;
         var revisionTipoInteres = 1;
         var fechaPago = new Date(parseInt(fechaPrimeraCuotaArr[2]), parseInt(fechaPrimeraCuotaArr[1]) - 1, parseInt(fechaPrimeraCuotaArr[0]));
+        var fechaDemora = new Date(parseInt(fechaDemoraArr[2]), parseInt(fechaDemoraArr[1]) - 1, parseInt(fechaDemoraArr[0]));
+        var fechaCalculo = new Date(parseInt(fechaCalculoArr[2]), parseInt(fechaCalculoArr[1]) - 1, parseInt(fechaCalculoArr[0]));
         var euribor = getEuribor(new Date(fechaPago.getFullYear(), fechaPago.getMonth() - 4, 1), 0);
         var tipoDeInteresVinculado = euribor;
         var intereses = (principalPorAmortizar*(tipoInteres/100)/12)+cuotaCorrespondienteADiasDeCarencia;
@@ -282,7 +394,58 @@
         console.log("Math.min(pagosCalculados, cuotaTotal): "+Math.min(pagosCalculados, cuotaTotal));
         var importePagado = Math.max(Math.min(pagosCalculados, cuotaTotal), 0);
         var cuotasAcumuladas = 0;
-        for(var i = 0;i < parseInt(periodo);i++){
+        var counter = periodo*1;
+        var pagadoIntereses = Math.min(intereses, importePagado);
+        var pagadoPrincipal = Math.min(cuotaDePrincipal, (importePagado-pagadoIntereses));
+        var pendiente = cuotaTotal-importePagado;
+        var oneDay = 24*60*60*1000;
+        var daysBetweenDates = Math.round(Math.abs((fechaDemora.getTime() - fechaPago.getTime())/(oneDay)));
+        var demora = Math.max(pendiente*((defInt/100)+tipo*(tipoInteres/100))*daysBetweenDates/365, 0);
+        var tipoInteresDemora = tipoInteres*tipo+defInt;
+        var otrasAmort = 0;
+
+        var principalVencidoTotal = 0;
+        var interesesOrdinarios = 0;
+        var interesesDemora = 0;
+        var principalTotal = prestamo;
+        var indexCert = -1;
+        var fechaIndexCert;
+        var tipoInteresIndexCert = -1;
+        var tipoInteresDemoraIndexCert = -1;
+        var principalNoVencidoIndexCert = -1;
+
+        var capitalSUM = 0;
+        var interesesSUM = 0;
+        var interesesDemoraSUM = 0;
+        var totalSUM = 0;
+
+        var numCuotasImpagadas = 0;
+        var cuotaTotalSUM = 0;
+        for(var i = 0;i < counter;i++){
+
+            if(fechaPago.getTime() <= fechaCalculo.getTime()){
+                principalVencidoTotal += (cuotaDePrincipal - pagadoPrincipal);
+                interesesOrdinarios += (intereses - pagadoIntereses);
+                interesesDemora += demora;
+                indexCert = (i+1);
+                fechaIndexCert = fechaPago;
+
+                capitalSUM += cuotaDePrincipal-pagadoPrincipal;
+                interesesSUM += intereses-pagadoIntereses;
+                interesesDemoraSUM += demora;
+                totalSUM += cuotaDePrincipal-pagadoPrincipal+intereses-pagadoIntereses+demora;
+                if(cuotaDePrincipal-pagadoPrincipal+intereses-pagadoIntereses+demora > 0){
+                    numCuotasImpagadas++;
+                }
+
+                cuotaTotalSUM += cuotaTotal;
+            }
+            else if(principalNoVencidoIndexCert < 0){
+                tipoInteresIndexCert = tipoInteres;
+                tipoInteresDemoraIndexCert = tipoInteresIndexCert*tipo + defInt;
+                principalNoVencidoIndexCert = principalPorAmortizar;
+            }
+            principalTotal -= (pagadoPrincipal + otrasAmort);
             $('#tablaDatos tbody').append(  '<tr>\
                                                 <td>'+(i+1)+'</td>\
                                                 <td>'+formatDate(fechaPago)+'</td>\
@@ -300,6 +463,39 @@
                                                 <td></td>\
                                                 <td>'+(i+1)+'</td>\
                                             </tr>');
+            
+
+            $('#tablaDatosCert tbody').append(  '<tr>\
+                                                <td>'+(i+1)+'</td>\
+                                                <td>'+periodo+'</td>\
+                                                <td>'+formatDate(fechaPago)+'</td>\
+                                                <td>'+principalPorAmortizar.toFixed(2)+'€</td>\
+                                                <td>'+tipoDeInteresVinculado+'%</td>\
+                                                <td>'+interesDiferencial+'%</td>\
+                                                <td>'+revisionTipoInteres+'</td>\
+                                                <td>'+tipoInteres+'%</td>\
+                                                <td>'+cuotaDePrincipal.toFixed(2)+'€</td>\
+                                                <td>'+intereses.toFixed(2)+'€</td>\
+                                                <td>'+cuotaTotal.toFixed(2)+'€</td>\
+                                                <td>'+pagadoPrincipal.toFixed(2)+'€</td>\
+                                                <td>'+pagadoIntereses.toFixed(2)+'€</td>\
+                                                <td>'+importePagado.toFixed(2)+'€</td>\
+                                                <td>'+pendiente.toFixed(2)+'</td>\
+                                                <td>'+demora.toFixed(2)+'</td>\
+                                                <td>'+otrasAmort.toFixed(2)+'</td>\
+                                            </tr>');
+
+            if(fechaPago.getTime() <= fechaCalculo.getTime()){
+                $('#tablaDatosPrint tbody').append(  '<tr>\
+                                                <td>'+formatDate(fechaPago)+'</td>\
+                                                <td>'+tipoInteres+'</td>\
+                                                <td>'+tipoInteresDemora+'</td>\
+                                                <td>'+(cuotaDePrincipal-pagadoPrincipal).toFixed(2)+'€</td>\
+                                                <td>'+(intereses-pagadoIntereses).toFixed(2)+'€</td>\
+                                                <td>'+demora.toFixed(2)+'€</td>\
+                                                <td>'+(cuotaDePrincipal-pagadoPrincipal+intereses-pagadoIntereses+demora).toFixed(2)+'€</td>\
+                                            </tr>');
+            }
             principalPorAmortizar = principalPorAmortizar - cuotaDePrincipal;
             revisionTipoInteres = (i+1)%12==0?1:0;
             fechaPago = finMes == 'no'?new Date(fechaPago.getFullYear(), fechaPago.getMonth() + 1, fechaPago.getDate()):new Date(fechaPago.getFullYear(), fechaPago.getMonth() + 2, 0);
@@ -311,7 +507,78 @@
             cuotasAcumuladas += cuotaTotal;
             cuotaTotal = cuotaDePrincipal+intereses;
             importePagado = Math.max(Math.min(pagosCalculados-cuotasAcumuladas, cuotaTotal), 0);
+            pagadoIntereses = Math.min(intereses, importePagado);
+            pagadoPrincipal = Math.min(cuotaDePrincipal, (importePagado-pagadoIntereses));
+            pendiente = cuotaTotal-importePagado;
+            daysBetweenDates = Math.round((fechaDemora.getTime() - fechaPago.getTime())/(oneDay));
+            demora = Math.max(pendiente*((defInt/100)+tipo*(tipoInteres/100))*daysBetweenDates/365, 0);
+            tipoInteresDemora = tipoInteres*tipo+defInt;
         }
+
+        daysBetweenDates = Math.round((fechaCalculo.getTime() - fechaIndexCert.getTime())/(oneDay));
+
+        var interesesNoVencidos = 0;
+        if(daysBetweenDates != 0){
+            interesesNoVencidos = principalNoVencidoIndexCert * (tipoInteresIndexCert / 100) * (daysBetweenDates / 365);
+        }
+
+        $('#indexCert').text(indexCert);
+        $('#fechaIndexCert').text(formatDate(fechaIndexCert));
+        $('#tipoInteresIndexCert').text(tipoInteresIndexCert+'%');
+        $('#tipoInteresDemoraIndexCert').text(tipoInteresDemoraIndexCert+'%');
+        $('#principalNoVencidoIndexCert').text(principalNoVencidoIndexCert.toFixed(2)+'€');
+
+        $('#principalTotal').text(principalTotal.toFixed(2)+'€');
+        $('#principalVencidoTotal').text(principalVencidoTotal.toFixed(2)+'€');
+        $('#principalNoVencidoTotal').text((principalTotal - principalVencidoTotal).toFixed(2)+'€');
+        $('#interesesOrdinarios').text(interesesOrdinarios.toFixed(2)+'€');
+        $('#interesesNoVencidos').text(interesesNoVencidos.toFixed(2)+'€');
+        $('#interesesDemora').text(interesesDemora.toFixed(2)+'€');
+        var totalCert = principalVencidoTotal+(principalTotal - principalVencidoTotal)+interesesOrdinarios+interesesNoVencidos+interesesDemora;
+        $('#totalCert').text(totalCert.toFixed(2)+'€');
+
+        var pcntTotalImpagado = (totalSUM / cuotaTotalSUM) * 100;
+
+
+        $('#tablaDatosPrint tbody').append(  '<tr><td colspan="7">&nbsp;</td></tr>');
+        $('#tablaDatosPrint tbody').append(  '<tr>\
+                                                <td>'+formatDate(fechaCalculo)+'</td>\
+                                                <td>'+tipoInteresIndexCert+'</td>\
+                                                <td>'+tipoInteresDemoraIndexCert+'</td>\
+                                                <td>'+(principalTotal - principalVencidoTotal).toFixed(2)+'€</td>\
+                                                <td>'+interesesNoVencidos.toFixed(2)+'€</td>\
+                                                <td>'+(new Number(0)).toFixed(2)+'€</td>\
+                                                <td>'+(principalTotal - principalVencidoTotal + interesesNoVencidos+0).toFixed(2)+'</td>\
+                                            </tr>');
+        $('#tablaDatosPrint tbody').append(  '<tr>\
+                                                <td><b>Total</b></td>\
+                                                <td></td>\
+                                                <td></td>\
+                                                <td><b>'+(capitalSUM + principalTotal - principalVencidoTotal).toFixed(2)+'€</b></td>\
+                                                <td><b>'+(interesesSUM + interesesNoVencidos).toFixed(2)+'€</b></td>\
+                                                <td><b>'+interesesDemoraSUM.toFixed(2)+'€</b></td>\
+                                                <td><b>'+(totalSUM + principalTotal - principalVencidoTotal + interesesNoVencidos+0).toFixed(2)+'</b></td>\
+                                            </tr>');
+        $('#tablaDatosPrint tbody').append(  '<tr>\
+                                                <td><b>Total adeudado a fecha '+formatDate(fechaCalculo)+'</b></td>\
+                                                <td></td>\
+                                                <td></td>\
+                                                <td><b>'+capitalSUM.toFixed(2)+'€</b></td>\
+                                                <td><b>'+interesesSUM.toFixed(2)+'€</b></td>\
+                                                <td><b>'+interesesDemoraSUM.toFixed(2)+'€</b></td>\
+                                                <td><b>'+totalSUM.toFixed(2)+'</b></td>\
+                                            </tr>');
+        $('#tablaDatosPrint tbody').append(  '<tr><td colspan="7">&nbsp;</td></tr>');
+        $('#tablaDatosPrint tbody').append(  '<tr>\
+                                                <td><b>Número de cuotas impagadas:</b></td>\
+                                                <td><b>'+numCuotasImpagadas+'</b></td>\
+                                                <td colspan="5"></td>\
+                                            </tr>');
+        $('#tablaDatosPrint tbody').append(  '<tr>\
+                                                <td><b>% Total impagado:</b></td>\
+                                                <td><b>'+pcntTotalImpagado.toFixed(2)+'%</b></td>\
+                                                <td colspan="5"></td>\
+                                            </tr>');
     }
 
     function formatDate(d){
