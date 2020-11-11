@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>JMT Loans</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link id="bsdp-css" href="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker3.min.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+  <script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
   <style type="text/css">
     .tab-content{
         padding: 20px;
@@ -40,7 +43,8 @@
 
         .container-fluid > h2,
         .container-fluid > p,
-        ul.nav-tabs {
+        ul.nav-tabs,
+        .btn-print {
             display: none;
         }
 
@@ -97,7 +101,7 @@
                     <div class="col-xs-3">
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Fecha cálculo:</label>
-                            <input type="text" class="form-control" id="fechaCalculo" value="27/08/2020" placeholder="Introduce la fecha de cálculo">
+                            <input type="text" class="form-control datepicker" id="fechaCalculo" value="27/08/2020" placeholder="Introduce la fecha de cálculo">
                         </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Revisión Interes:</label>
@@ -123,7 +127,7 @@
                     <div class="col-xs-3">
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Fecha primera cuota:</label>
-                            <input type="text" class="form-control" id="fechaPrimeraCuota" value="03/02/2016" placeholder="Introduce la fecha de la primera cuota">
+                            <input type="text" class="form-control datepicker" id="fechaPrimeraCuota" value="03/02/2016" placeholder="Introduce la fecha de la primera cuota">
                         </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Primera cuota de principal:</label>
@@ -153,7 +157,7 @@
                         </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Fecha demora:</label>
-                            <input type="text" class="form-control" id="fechaDemora" value="27/08/2020" placeholder="Introduce la fecha de demora">
+                            <input type="text" class="form-control datepicker" id="fechaDemora" value="27/08/2020" placeholder="Introduce la fecha de demora">
                         </div>
                     </div>
                 </div>
@@ -302,7 +306,7 @@
             </table>
         </div>
         <div id="tab3" class="tab-pane fade">
-            <div class="row">
+            <div class="row btn-print">
                 <div class="col-xs-12">
                     <div class="form-group col-xs-11">
                         <button type="button" onClick="window.print();" class="btn btn-primary">Imprimir</button>
@@ -335,12 +339,119 @@
     </div>
 </div>
 <script type="text/javascript">
+
+    $(document).ready(function(){
+        $('.datepicker').datepicker({
+            format: 'dd/mm/yyyy',
+            language: 'es'
+        });
+    });
+
     function borrarLineas(){
         $('#tablaDatos tbody').empty().append('<tr><td colspan="15" style="text-align: center;">Introduce los datos en el formulario</td></tr>');
         $('#tablaDatosCert tbody').empty();
         $('#tablaDatosPrint tbody').empty();
     }
+    function validar(){
+            var prestamo = new Number($('#prestamo').val());
+            var periodo = new Number($('#periodo').val());
+            var interesDiferencial = new Number($('#interesDiferencial').val());
+            var revisionInteres = new Number($('#revisionInteres').val());
+            var diasCarencia = new Number($('#diasCarencia').val());
+            var tipoInteresPrimeraCuota = new Number($('#tipoInteresPrimeraCuota').val());
+        var finMes = $('#finMes').val();
+        var cuotaCreciente = $('#cuotaCreciente').val();
+            var primeraCuotaPrincipal = new Number($('#primeraCuotaPrincipal').val());
+            var coeficienteCuotaCreciente = new Number($('#coeficienteCuotaCreciente').val());
+        var fechaPrimeraCuota = $('#fechaPrimeraCuota').val();
+            var cuotaCorrespondienteADiasDeCarencia = new Number($('#cuotaCorrespondienteADiasDeCarencia').val());
+            var loan = $('#loan').val();
+        var fechaCalculo = $('#fechaCalculo').val();
+            var pagosCalculados = new Number($('#pagosCalculados').val());
+            var defInt = new Number($('#defInt').val());
+            var tipo = new Number($('#tipo').val());
+        var fechaDemora = $('#fechaDemora').val();
+
+        var error = '';
+        if(isNaN(prestamo) || prestamo <=0) error += 'Préstamo tiene que ser un número positivo\n';
+        if($('#prestamo').val().trim() == '') error += 'Préstamo es obligatorio\n';
+        if(isNaN(periodo) || periodo <=0) error += 'Periodo tiene que ser un número positivo\n';
+        if($('#periodo').val().trim() == '') error += 'Periodo es obligatorio\n';
+        if(isNaN(interesDiferencial)) error += 'Interés Diferencial tiene que ser un número\n';
+        if($('#interesDiferencial').val().trim() == '') error += 'Interés Diferencial es obligatorio\n';
+        if(isNaN(revisionInteres) || revisionInteres <0) error += 'Revisión Interés tiene que ser un número mayor o igual que cero\n';
+        if($('#revisionInteres').val().trim() == '') error += 'Revisión Interés es obligatorio\n';
+        if(isNaN(diasCarencia) || diasCarencia <0) error += 'Días Carencia tiene que ser un número mayor o igual que cero\n';
+        if($('#diasCarencia').val().trim() == '') error += 'Días Carencia es obligatorio\n';
+        if(isNaN(tipoInteresPrimeraCuota)) error += 'Tipo Interés Primera Cuota tiene que ser un número\n';
+        if($('#tipoInteresPrimeraCuota').val().trim() == '') error += 'Tipo Interés Primera Cuota es obligatorio\n';
+        if(isNaN(primeraCuotaPrincipal) || primeraCuotaPrincipal <0) error += 'Primera Cuota Principal tiene que ser un número mayor o igual que cero\n';
+        if($('#primeraCuotaPrincipal').val().trim() == '') error += 'Primera Cuota Principal es obligatorio\n';
+        if(isNaN(coeficienteCuotaCreciente)) error += 'Coeficiente Cuota Creciente tiene que ser un número\n';
+        if($('#coeficienteCuotaCreciente').val().trim() == '') error += 'Coeficiente Cuota Creciente es obligatorio\n';
+        if(isNaN(cuotaCorrespondienteADiasDeCarencia) || cuotaCorrespondienteADiasDeCarencia <0) error += 'Cuota Correspondiente a Días de Carencia tiene que ser un número mayor o igual que cero\n';
+        if($('#cuotaCorrespondienteADiasDeCarencia').val().trim() == '') error += 'Cuota Correspondiente a Días de Carencia es obligatorio\n';
+        if($('#loan').val().trim() == '') error += 'Loan es obligatorio\n';
+        if(isNaN(pagosCalculados) || pagosCalculados <0) error += 'Pagos ya realizados tiene que ser un número mayor o igual que cero\n';
+        if($('#pagosCalculados').val().trim() == '') error += 'Pagos ya realizados es obligatorio\n';
+        if(isNaN(defInt)) error += 'Def int tiene que ser un número\n';
+        if($('#defInt').val().trim() == '') error += 'Def int es obligatorio\n';
+        if(isNaN(tipo)) error += 'Tipo tiene que ser un número\n';
+        if($('#tipo').val().trim() == '') error += 'Tipo es obligatorio\n';
+
+        if($('#finMes').val().trim() == '') error += 'Fin Mes es obligatorio\n';
+        if($('#finMes').val() != 'si' && $('#finMes').val() != 'no') error += 'Fin Mes debe ser Sí o No\n';
+        if($('#cuotaCreciente').val().trim() == '') error += 'Cuota Creciente es obligatorio\n';
+        if($('#cuotaCreciente').val() != 'si' && $('#cuotaCreciente').val() != 'no') error += 'Cuota Creciente debe ser Sí o No\n';
+
+        if($('#fechaPrimeraCuota').val().trim() == '') {
+            error += 'Fecha Primera Cuota es obligatorio\n';
+        }
+        else{
+            var fechaPrimeraCuotaVal = validarFecha($('#fechaPrimeraCuota').val(), 'Fecha Primera Cuota');
+            if(fechaPrimeraCuotaVal != '') error += fechaPrimeraCuotaVal;
+        }
+        if($('#fechaCalculo').val().trim() == '') {
+            error += 'Fecha Calculo es obligatorio\n';
+        }
+        else{
+            var fechaCalculoVal = validarFecha($('#fechaCalculo').val(), 'Fecha Cálculo');
+            if(fechaCalculoVal != '') error += fechaCalculoVal;
+        }
+        if($('#fechaDemora').val().trim() == '') {
+            error += 'Fecha Demora es obligatorio\n';
+        }
+        else{
+            var fechaDemoraVal = validarFecha($('#fechaDemora').val(), 'Fecha Demora');
+            if(fechaDemoraVal != '') error += fechaDemoraVal;
+        }
+
+        if(error != ''){
+            alert(error);
+            return false;
+        }
+
+        return true;
+    }
+    
+    function validarFecha(fecha, label){
+        var error = '';
+        try{
+            var fechaArr = fecha.split("/");
+            var f = new Date(parseInt(fechaArr[2]), parseInt(fechaArr[1]) - 1, parseInt(fechaArr[0]));
+            if(isNaN(f.getTime())) throw 'error';
+        }
+        catch(err) {
+            error = label+' no es válida\n';
+        }
+
+        return error;
+    }
+
     function calcular(){
+
+        if(!validar()) return;
+
         var prestamo = new Number($('#prestamo').val());
         var periodo = new Number($('#periodo').val());
         var interesDiferencial = new Number($('#interesDiferencial').val());
@@ -373,13 +484,6 @@
         $('#tablaDatosPrint tbody').empty();
         var tipoInteres = tipoInteresPrimeraCuota;
         var principalPorAmortizar = prestamo;
-        console.log("tipoInteres: "+tipoInteres);
-        console.log("principalPorAmortizar: "+principalPorAmortizar);
-        console.log("cuotaCreciente: "+cuotaCreciente);
-        console.log("primeraCuotaPrincipal: "+primeraCuotaPrincipal);
-        console.log("cuotaCreciente == 'no': "+(cuotaCreciente == 'no'));
-        console.log("tipoInteres/12: "+(tipoInteres/12));
-        console.log("-principalPorAmortizar: "+(-principalPorAmortizar));
         var cuotaDePrincipal = cuotaCreciente == 'no'?ExcelFormulas.PPMT(tipoInteres/1200,1,periodo,-principalPorAmortizar, 0, 0):primeraCuotaPrincipal;
         var revisionTipoInteres = 1;
         var fechaPago = new Date(parseInt(fechaPrimeraCuotaArr[2]), parseInt(fechaPrimeraCuotaArr[1]) - 1, parseInt(fechaPrimeraCuotaArr[0]));
@@ -389,9 +493,6 @@
         var tipoDeInteresVinculado = euribor;
         var intereses = (principalPorAmortizar*(tipoInteres/100)/12)+cuotaCorrespondienteADiasDeCarencia;
         var cuotaTotal = cuotaDePrincipal+intereses;
-        console.log("pagosCalculados: "+pagosCalculados);
-        console.log("cuotaTotal: "+cuotaTotal);
-        console.log("Math.min(pagosCalculados, cuotaTotal): "+Math.min(pagosCalculados, cuotaTotal));
         var importePagado = Math.max(Math.min(pagosCalculados, cuotaTotal), 0);
         var cuotasAcumuladas = 0;
         var counter = periodo*1;
