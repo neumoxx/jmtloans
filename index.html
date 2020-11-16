@@ -34,6 +34,25 @@
         color: #ccc;
     }
 
+    .cert-table,
+    .cert-summary{
+        float:left;
+    }
+
+    .cert-summary table{
+        margin-left:40px;
+        margin-top:40px;
+    }
+
+    .cert-table{
+        width:60%;
+    }
+
+    .cert-summary{
+        width:40%;
+        float:left;
+    }
+
     @media print { 
         #tablaDatosPrint {
             display: block !important;
@@ -50,6 +69,16 @@
 
         div.tab-content{
             border: none;
+        }
+
+        #tablaDatosPrint{
+            max-width:100%;
+            width:100%;
+            table-layout: fixed;
+        }
+
+        span.gray{
+            display: none;
         }
     }
 
@@ -131,11 +160,11 @@
                         </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Primera cuota de principal:</label>
-                            <input type="text" class="form-control" id="primeraCuotaPrincipal" value="" placeholder="Introduce la primera cuota de principal">
+                            <input type="text" class="form-control" id="primeraCuotaPrincipal" value="0" placeholder="Introduce la primera cuota de principal">
                         </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Coeficiente cuota creciente:</label>
-                            <input type="text" class="form-control" id="coeficienteCuotaCreciente" value="" placeholder="Introduce el coeficiente cuota creciente">
+                            <input type="text" class="form-control" id="coeficienteCuotaCreciente" value="0" placeholder="Introduce el coeficiente cuota creciente">
                         </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Cuota correspondiente a días de carencia:</label>
@@ -200,71 +229,7 @@
         </div>
         <div id="tab2" class="tab-pane fade">
             <form class="form-horizontal" action="#">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <table class="summary-table">
-                            <tr>
-                                <td><b>Loan: </b></td>
-                                <td><span id="loanCert"></span></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td><b>Fecha cálculo: </b></td>
-                                <td><span id="fechaCalculoCert"></span></td>
-                                <td><span id="indexCert" class="gray"></span></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td><b>Principal total: </b></td>
-                                <td><span id="principalTotal"></span></td>
-                                <td><span id="fechaIndexCert" class="gray"></span></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td><b>Principal vencido: </b></td>
-                                <td><span id="principalVencidoTotal"></span></td>
-                                <td><span id="tipoInteresIndexCert" class="gray"></span></td>
-                                <td><span id="tipoInteresDemoraIndexCert" class="gray"></span></td>
-                            </tr>
-                            <tr>
-                                <td><b>Principal no vencido: </b></td>
-                                <td><span id="principalNoVencidoTotal"></span></td>
-                                <td><span id="principalNoVencidoIndexCert" class="gray"></span></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td><b>Intereses ordinarios: </b></td>
-                                <td><span id="interesesOrdinarios"></span></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td><b>Intereses no vencidos: </b></td>
-                                <td><span id="interesesNoVencidos"></span></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td><b>Intereses de demora: </b></td>
-                                <td><span id="interesesDemora"></span></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td colspan="4"><hr/></td>
-                            </tr>
-                            <tr>
-                                <td><b>Total: </b></td>
-                                <td><span id="totalCert"></span></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <br/>
-                <br/>
+                
                 <br/>
                 <div class="row">
                     <div class="col-xs-12">
@@ -313,28 +278,149 @@
                     </div>
                 </div>
             </div>
-
-            <table class="table table-striped" id="tablaDatosPrint">
-                <thead>
-                    <tr>
-                        <th colspan="7" id="loanPrint"></th>
-                    </tr>
-                    <tr>
-                        <th>Fech Vto</th>
-                        <th>Tipo interés cobro</th>
-                        <th>Tipo interés demora</th>
-                        <th>Capital</th>
-                        <th>Intereses</th>
-                        <th>Intereses Demora</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td colspan="17" style="text-align: center;"></td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="row">
+                <div class="col-xs-12">
+                    <table class="summary-table">
+                        <tr>
+                            <td style="text-align: right;"><b>Loan: </b></td>
+                            <td style="text-align: center;"><span class="loanCert"></span></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;"><b>Fecha cálculo: </b></td>
+                            <td style="text-align: center;"><span class="fechaCalculoCert"></span></td>
+                            <td><span class="indexCert gray"></span></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;"><b>Principal total: </b></td>
+                            <td style="text-align: center;"><span class="principalTotal"></span></td>
+                            <td><span class="fechaIndexCert gray"></span></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;"><b>Principal vencido: </b></td>
+                            <td style="text-align: center;"><span class="principalVencidoTotal"></span></td>
+                            <td><span class="tipoInteresIndexCert gray"></span></td>
+                            <td><span class="tipoInteresDemoraIndexCert gray"></span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;"><b>Principal no vencido: </b></td>
+                            <td style="text-align: center;"><span class="principalNoVencidoTotal"></span></td>
+                            <td><span class="principalNoVencidoIndexCert gray"></span></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;"><b>Intereses ordinarios: </b></td>
+                            <td style="text-align: center;"><span class="interesesOrdinarios"></span></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;"><b>Intereses no vencidos: </b></td>
+                            <td style="text-align: center;"><span class="interesesNoVencidos"></span></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;"><b>Intereses de demora: </b></td>
+                            <td style="text-align: center;"><span class="interesesDemora"></span></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"><hr/></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;"><b>Total: </b></td>
+                            <td style="text-align: center;"><span class="totalCert"></span></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <br/>
+                    <br/>
+                    <div class="cert-table">
+                        <table class="table table-striped" id="tablaDatosPrint">
+                            <thead>
+                                <tr>
+                                    <th colspan="7" id="loanPrint"></th>
+                                </tr>
+                                <tr>
+                                    <th>Fech Vto</th>
+                                    <th>Tipo interés cobro</th>
+                                    <th>Tipo interés demora</th>
+                                    <th>Capital</th>
+                                    <th>Intereses</th>
+                                    <th>Intereses Demora</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td colspan="17" style="text-align: center;"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row cert-summary">
+                        <div class="col-xs-12">
+                            <table class="summary-table">
+                                <tr>
+                                    <td><i>Principal pendiente: </i></td>
+                                    <td><span class="principalTotal"></span></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><i>Principal pendiente vencido: </i></td>
+                                    <td><span class="principalVencidoTotal"></span></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><i>Principal pendiente no vencido: </i></td>
+                                    <td><span class="principalNoVencidoTotal"></span></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><i>Intereses ordinarios pendientes: </i></td>
+                                    <td><span class="interesesOrdinarios"></span></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><i>Intereses ordinarios devengados: </i></td>
+                                    <td><span class="interesesNoVencidos"></span></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><i>Intereses demora pendientes: </i></td>
+                                    <td><span class="interesesDemora"></span></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><hr/></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Total pendiente: </b></td>
+                                    <td><span class="totalCert"></span></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -353,23 +439,23 @@
         $('#tablaDatosPrint tbody').empty();
     }
     function validar(){
-            var prestamo = new Number($('#prestamo').val());
-            var periodo = new Number($('#periodo').val());
-            var interesDiferencial = new Number($('#interesDiferencial').val());
-            var revisionInteres = new Number($('#revisionInteres').val());
-            var diasCarencia = new Number($('#diasCarencia').val());
-            var tipoInteresPrimeraCuota = new Number($('#tipoInteresPrimeraCuota').val());
+        var prestamo = new Number($('#prestamo').val());
+        var periodo = new Number($('#periodo').val());
+        var interesDiferencial = new Number($('#interesDiferencial').val());
+        var revisionInteres = new Number($('#revisionInteres').val());
+        var diasCarencia = new Number($('#diasCarencia').val());
+        var tipoInteresPrimeraCuota = new Number($('#tipoInteresPrimeraCuota').val());
         var finMes = $('#finMes').val();
         var cuotaCreciente = $('#cuotaCreciente').val();
-            var primeraCuotaPrincipal = new Number($('#primeraCuotaPrincipal').val());
-            var coeficienteCuotaCreciente = new Number($('#coeficienteCuotaCreciente').val());
+        var primeraCuotaPrincipal = new Number($('#primeraCuotaPrincipal').val());
+        var coeficienteCuotaCreciente = new Number($('#coeficienteCuotaCreciente').val());
         var fechaPrimeraCuota = $('#fechaPrimeraCuota').val();
-            var cuotaCorrespondienteADiasDeCarencia = new Number($('#cuotaCorrespondienteADiasDeCarencia').val());
-            var loan = $('#loan').val();
+        var cuotaCorrespondienteADiasDeCarencia = new Number($('#cuotaCorrespondienteADiasDeCarencia').val());
+        var loan = $('#loan').val();
         var fechaCalculo = $('#fechaCalculo').val();
-            var pagosCalculados = new Number($('#pagosCalculados').val());
-            var defInt = new Number($('#defInt').val());
-            var tipo = new Number($('#tipo').val());
+        var pagosCalculados = new Number($('#pagosCalculados').val());
+        var defInt = new Number($('#defInt').val());
+        var tipo = new Number($('#tipo').val());
         var fechaDemora = $('#fechaDemora').val();
 
         var error = '';
@@ -475,9 +561,9 @@
         var fechaDemoraArr = fechaDemora.split("/");
         var fechaCalculoArr = fechaCalculo.split("/");
 
-        $('#loanCert').text(loan);
+        $('.loanCert').text(loan);
+        $('.fechaCalculoCert').text(fechaCalculo);
         $('#loanPrint').text(loan);
-        $('#fechaCalculoCert').text(fechaCalculo);
 
         $('#tablaDatos tbody').empty();
         $('#tablaDatosCert tbody').empty();
@@ -623,20 +709,20 @@
             interesesNoVencidos = principalNoVencidoIndexCert * (tipoInteresIndexCert / 100) * (daysBetweenDates / 365);
         }
 
-        $('#indexCert').text(indexCert);
-        $('#fechaIndexCert').text(formatDate(fechaIndexCert));
-        $('#tipoInteresIndexCert').text(tipoInteresIndexCert+'%');
-        $('#tipoInteresDemoraIndexCert').text(tipoInteresDemoraIndexCert+'%');
-        $('#principalNoVencidoIndexCert').text(principalNoVencidoIndexCert.toFixed(2)+'€');
+        $('.indexCert').text(indexCert);
+        $('.fechaIndexCert').text(formatDate(fechaIndexCert));
+        $('.tipoInteresIndexCert').text(tipoInteresIndexCert+'%');
+        $('.tipoInteresDemoraIndexCert').text(tipoInteresDemoraIndexCert+'%');
+        $('.principalNoVencidoIndexCert').text(principalNoVencidoIndexCert.toFixed(2)+'€');
 
-        $('#principalTotal').text(principalTotal.toFixed(2)+'€');
-        $('#principalVencidoTotal').text(principalVencidoTotal.toFixed(2)+'€');
-        $('#principalNoVencidoTotal').text((principalTotal - principalVencidoTotal).toFixed(2)+'€');
-        $('#interesesOrdinarios').text(interesesOrdinarios.toFixed(2)+'€');
-        $('#interesesNoVencidos').text(interesesNoVencidos.toFixed(2)+'€');
-        $('#interesesDemora').text(interesesDemora.toFixed(2)+'€');
+        $('.principalTotal').text(principalTotal.toFixed(2)+'€');
+        $('.principalVencidoTotal').text(principalVencidoTotal.toFixed(2)+'€');
+        $('.principalNoVencidoTotal').text((principalTotal - principalVencidoTotal).toFixed(2)+'€');
+        $('.interesesOrdinarios').text(interesesOrdinarios.toFixed(2)+'€');
+        $('.interesesNoVencidos').text(interesesNoVencidos.toFixed(2)+'€');
+        $('.interesesDemora').text(interesesDemora.toFixed(2)+'€');
         var totalCert = principalVencidoTotal+(principalTotal - principalVencidoTotal)+interesesOrdinarios+interesesNoVencidos+interesesDemora;
-        $('#totalCert').text(totalCert.toFixed(2)+'€');
+        $('.totalCert').text(totalCert.toFixed(2)+'€');
 
         var pcntTotalImpagado = (totalSUM / cuotaTotalSUM) * 100;
 
