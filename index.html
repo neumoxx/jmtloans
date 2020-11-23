@@ -629,7 +629,7 @@
                 interesesSUM += intereses-pagadoIntereses;
                 interesesDemoraSUM += demora;
                 totalSUM += cuotaDePrincipal-pagadoPrincipal+intereses-pagadoIntereses+demora;
-                if(cuotaDePrincipal-pagadoPrincipal+intereses-pagadoIntereses+demora > 0){
+                if(cuotaDePrincipal-pagadoPrincipal+intereses-pagadoIntereses+demora >= 0.01){
                     numCuotasImpagadas++;
                 }
 
@@ -693,7 +693,7 @@
             }
             principalPorAmortizar = principalPorAmortizar - cuotaDePrincipal;
             revisionTipoInteres = (i+1)%revisionInteres==0?1:0;
-            fechaPago = finMes == 'no'?new Date(fechaPago.getFullYear(), fechaPago.getMonth() + 1, fechaPago.getDate()):new Date(fechaPago.getFullYear(), fechaPago.getMonth() + 2, 0);
+            fechaPago = getFechaPago(finMes, fechaPago);
             tipoDeInteresVinculado = getEuribor(new Date(fechaPago.getFullYear(), fechaPago.getMonth() - 4, 1), tipoDeInteresVinculado);
             tipoInteres = revisionTipoInteres == 1?Math.round((tipoDeInteresVinculado+interesDiferencial)*10000)/10000:Math.round(tipoInteres*10000)/10000;
             periodo = periodo - 1;
@@ -1031,6 +1031,17 @@
                     {"mes": "12-2019", "fecha": "03/01/2020", "euribor": "-0.261"},
                     {"mes": "01-2020", "fecha": "04/02/2020", "euribor": "-0.253"},
                     {"mes": "02-2020", "fecha": "03/03/2020", "euribor": "-0.288"}];
+
+    function getFechaPago(finMes, fechaPago){
+        var fechaPagoNextMonth = new Date(fechaPago.getFullYear(), fechaPago.getMonth() + 1, fechaPago.getDate());
+        var fechaPagoFirstDayNextMonth = new Date(fechaPago.getFullYear(), fechaPago.getMonth() + 1, 1);
+        if(finMes != 'no' || fechaPagoNextMonth.getMonth() != fechaPagoFirstDayNextMonth.getMonth()){
+            return new Date(fechaPago.getFullYear(), fechaPago.getMonth() + 2, 0);
+        }
+        else{
+            return fechaPagoNextMonth;
+        }
+    }
 
     /* Based on 
     * - EGM Mathematical Finance class by Enrique Garcia M. <egarcia@egm.co>
