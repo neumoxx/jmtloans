@@ -116,15 +116,15 @@
                         </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="email">Nominal del préstamo:</label>
-                            <input type="text" class="form-control" id="prestamo" value="46000" placeholder="Introduce importe">
+                            <input type="text" class="form-control" id="prestamo" value="41000" placeholder="Introduce importe">
                         </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Cuotas:</label>
-                            <input type="text" class="form-control" id="periodo" value="156" placeholder="Introduce el periodo en meses">
+                            <input type="text" class="form-control" id="periodo" value="360" placeholder="Introduce el periodo en meses">
                         </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Interes Diferencial:</label>
-                            <input type="text" class="form-control" id="interesDiferencial" value="3.5" placeholder="Introduce el interes diferencial">
+                            <input type="text" class="form-control" id="interesDiferencial" value="2" placeholder="Introduce el interes diferencial">
                         </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Fin mes:</label>
@@ -138,11 +138,11 @@
                     <div class="col-xs-3">
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Fecha cálculo:</label>
-                            <input type="text" class="form-control datepicker" id="fechaCalculo" value="27/08/2020" placeholder="Introduce la fecha de cálculo">
+                            <input type="text" class="form-control datepicker" id="fechaCalculo" value="30/06/2020" placeholder="Introduce la fecha de cálculo">
                         </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Revisión Interes:</label>
-                            <input type="text" class="form-control" id="revisionInteres" value="12" placeholder="Introduce la revision Interes en meses">
+                            <input type="text" class="form-control" id="revisionInteres" value="6" placeholder="Introduce la revision Interes en meses">
                         </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Días carencia:</label>
@@ -164,7 +164,7 @@
                     <div class="col-xs-3">
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Fecha primera cuota:</label>
-                            <input type="text" class="form-control datepicker" id="fechaPrimeraCuota" value="03/02/2016" placeholder="Introduce la fecha de la primera cuota">
+                            <input type="text" class="form-control datepicker" id="fechaPrimeraCuota" value="18/03/2013" placeholder="Introduce la fecha de la primera cuota">
                         </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Primera cuota de principal:</label>
@@ -182,15 +182,15 @@
                     <div class="col-xs-3">
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Pagos ya realizados:</label>
-                            <input type="text" class="form-control" id="pagosCalculados" value="3000" placeholder="Introduce los pagos ya realizados">
+                            <input type="text" class="form-control" id="pagosCalculados" value="901.654153782925" placeholder="Introduce los pagos ya realizados">
                         </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Coeficiente demora:</label>
-                            <input type="text" class="form-control" id="tipo" value="1" placeholder="Introduce tipo">
+                            <input type="text" class="form-control" id="tipo" value="0" placeholder="Introduce tipo">
                         </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Diferencial demora:</label>
-                            <input type="text" class="form-control" id="defInt" value="1" placeholder="Introduce def int">
+                            <input type="text" class="form-control" id="defInt" value="0" placeholder="Introduce def int">
                         </div>
                         <div class="form-group col-xs-11">
                             <label class="control-label" for="pwd">Fecha demora:</label>
@@ -576,7 +576,7 @@
         $('#tablaDatos tbody').empty();
         $('#tablaDatosCert tbody').empty();
         $('#tablaDatosPrint tbody').empty();
-        var tipoInteres = tipoInteresPrimeraCuota;
+        var tipoInteres = Math.round(tipoInteresPrimeraCuota*10000)/10000;
         var principalPorAmortizar = prestamo;
         var cuotaDePrincipal = cuotaCreciente == 'no'?ExcelFormulas.PPMT(tipoInteres/1200,1,periodo,-principalPorAmortizar, 0, 0):primeraCuotaPrincipal;
         var revisionTipoInteres = 1;
@@ -692,10 +692,10 @@
                                             </tr>');
             }
             principalPorAmortizar = principalPorAmortizar - cuotaDePrincipal;
-            revisionTipoInteres = (i+1)%12==0?1:0;
+            revisionTipoInteres = (i+1)%revisionInteres==0?1:0;
             fechaPago = finMes == 'no'?new Date(fechaPago.getFullYear(), fechaPago.getMonth() + 1, fechaPago.getDate()):new Date(fechaPago.getFullYear(), fechaPago.getMonth() + 2, 0);
             tipoDeInteresVinculado = getEuribor(new Date(fechaPago.getFullYear(), fechaPago.getMonth() - 4, 1), tipoDeInteresVinculado);
-            tipoInteres = revisionTipoInteres == 1?tipoDeInteresVinculado+interesDiferencial:tipoInteres;
+            tipoInteres = revisionTipoInteres == 1?Math.round((tipoDeInteresVinculado+interesDiferencial)*10000)/10000:Math.round(tipoInteres*10000)/10000;
             periodo = periodo - 1;
             cuotaDePrincipal = cuotaCreciente=='no'?ExcelFormulas.PPMT(tipoInteres/1200,1,periodo,-principalPorAmortizar, 0, 0):cuotaDePrincipal*coeficienteCuotaCreciente;
             intereses = principalPorAmortizar*(tipoInteres/100)/12;
@@ -1030,12 +1030,7 @@
                     {"mes": "11-2019", "fecha": "03/12/2019", "euribor": "-0.272"},
                     {"mes": "12-2019", "fecha": "03/01/2020", "euribor": "-0.261"},
                     {"mes": "01-2020", "fecha": "04/02/2020", "euribor": "-0.253"},
-                    {"mes": "02-2020", "fecha": "03/03/2020", "euribor": "-0.288"},
-                    {"mes": "03-2020", "fecha": "02/04/2020", "euribor": "-0.266"},
-                    {"mes": "04-2020", "fecha": "05/05/2020", "euribor": "-0.108"},
-                    {"mes": "05-2020", "fecha": "02/06/2020", "euribor": "-0.081"},
-                    {"mes": "06-2020", "fecha": "02/07/2020", "euribor": "-0.147"},
-                    {"mes": "07-2020", "fecha": "04/08/2020", "euribor": "-0.279"}];
+                    {"mes": "02-2020", "fecha": "03/03/2020", "euribor": "-0.288"}];
 
     /* Based on 
     * - EGM Mathematical Finance class by Enrique Garcia M. <egarcia@egm.co>
